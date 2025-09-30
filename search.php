@@ -2,7 +2,7 @@
 
 $servername = "localhost";
 $username = "root";
-$password = "";
+$password = ""; 
 $dbname = "search_project"; // your database name
 
 $conn = new mysqli($servername, $username, $password, $dbname);
@@ -16,7 +16,7 @@ if ($conn->connect_error) {
 $student_id = isset($_GET['st']) ? intval($_GET['st']) : 0;
 
 
-$sql = "SELECT * FROM search_project ORDER BY student_id ASC";
+$sql = "SELECT * FROM $dbname ORDER BY student_id ASC";
 $result = $conn->query($sql);
 
 if ($result && $result->num_rows > 0) {
@@ -40,7 +40,7 @@ if ($result && $result->num_rows > 0) {
 if (isset($_GET['st'])) {
     $student_id = intval($_GET['st']); 
 
-    $sql = "SELECT * FROM search_project WHERE student_id = $student_id ORDER BY student_id ASC";
+    $sql = "SELECT * FROM $dbname WHERE student_id = $student_id ORDER BY student_id ASC";
     $result = $conn->query($sql);
 
     if (!$result) {
