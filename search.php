@@ -4,7 +4,7 @@ $servername = "localhost";
 $username = "root";
 $password = ""; 
 $dbname = "search_project"; // your database name
-$tablename = "search_project"; 
+$tablename = "students_information"; 
 
 $conn = new mysqli($servername, $username, $password, $dbname); // Connect to database
 
@@ -20,28 +20,28 @@ $student_id = isset($_GET['st']) ? intval($_GET['st']) : 0; // read student_id f
 $sql = "SELECT * FROM $tablename ORDER BY student_id ASC"; // import all data from database to read
 $result = $conn->query($sql);
 
-if ($result && $result->num_rows > 0) {
-    $rank = null;
-    $num = 1;
+// if ($result && $result->num_rows > 0) {
+//     $rank = null;
+//     $num = 1;
 
-    while ($row = $result->fetch_assoc()) {
-        if ($row["student_id"] == $student_id) {
-            $rank = $num;
-            break;
-        }
-        $num++;
-    }
-} else {
-    echo "⚠️ Query error หรือไม่พบข้อมูลในตาราง";
-}
-
+//     while ($row = $result->fetch_assoc()) {
+//         if ($row["student_id"] == $student_id) {
+//             $rank = $num;
+//             break;
+//         }
+//         $num++;
+//     }
+// } else {
+//     echo "⚠️ Query error หรือไม่พบข้อมูลในตาราง";
+// }
+$row = $result->fetch_assoc();
 
 // form
 
 if (isset($_GET['st'])) {
     $student_id = intval($_GET['st']); 
 
-    $sql = "SELECT * FROM $dbname WHERE student_id = $student_id ORDER BY student_id ASC";
+    $sql = "SELECT * FROM $tablename WHERE student_id = $student_id ORDER BY student_id ASC";
     $result = $conn->query($sql);
 
     if (!$result) {
@@ -56,7 +56,7 @@ if (isset($_GET['st'])) {
             Last Name : " . $row["last_name"] . "<br>
             Nickname : " . $row["nickname"] . "<br>
             Class : " . $row["class"] . "<br>
-            Number : " . $rank . "<br>
+            Number : " . $row["number"] . "<br>
         ";
         echo '<br><a href="index.html">🔙 กลับหน้าแรก</a>';
     } else {
