@@ -1,0 +1,60 @@
+* {
+   font-style: color black;
+   font-size: 40px;
+   text-align: center;
+}
+
+body {
+   background-image: url('https://www.roong-aroon.ac.th/wp-content/uploads/2022/11/menu1-school.jpg');
+   background-size: cover;
+}
+
+.welcome {
+
+   background-image: url('https://www.starfishlabz.com/media/thumb/1728/15/1437824904.png');
+   background-position: center;
+   background-repeat: no-repeat;
+   width: 0%;
+   margin: 0 auto;
+   padding: 100px;
+   border: 10px rgb(0, 0, 0);
+   background-color: yellow;
+   border-radius: 100%;
+   box-shadow: 0 0 50px rgba(0, 0, 0, 0.5);
+}
+.head {
+   background-color: rgb(255, 245, 170);
+   color: rgb(0, 0, 0);
+   border-radius: 50px;
+   padding: 10px;
+   font-size: 120%;
+   text-align: center;
+   width: 50%;
+   margin: 0 auto;
+   border: 5px solid rgb(251, 255, 0);
+}
+
+
+.text_label {
+   
+   background-color: rgb(223, 154, 98);
+   color: rgb(255, 255, 255);
+   border-radius: 15px;
+   padding: 20px;
+   font-size: 80%;
+  
+   width: 20%;
+   margin: 0 auto;
+   border: 5px solid rgb(169, 93, 45);
+   text-align: center;
+}
+  
+.submit_button {
+   padding:10px;
+   margin: 20px;
+   border-radius: 20px;
+   width : 6%;
+   background-color: rgb(196, 111, 51);
+   color: white;
+   font-size: 20px;
+}
