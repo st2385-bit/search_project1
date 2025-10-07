@@ -4,19 +4,20 @@ $servername = "localhost";
 $username = "root";
 $password = ""; 
 $dbname = "search_project"; // your database name
+$tablename = "search_project"; 
 
-$conn = new mysqli($servername, $username, $password, $dbname);
+$conn = new mysqli($servername, $username, $password, $dbname); // Connect to database
 
 
 if ($conn->connect_error) {
-    die("❌ Connection failed: " . $conn->connect_error);
+    die("Connection failed: " . $conn->connect_error);// if cant connect to database
 }
 
 
-$student_id = isset($_GET['st']) ? intval($_GET['st']) : 0;
+$student_id = isset($_GET['st']) ? intval($_GET['st']) : 0; // read student_id from URL 
 
 
-$sql = "SELECT * FROM $dbname ORDER BY student_id ASC";
+$sql = "SELECT * FROM $tablename ORDER BY student_id ASC"; // import all data from database to read
 $result = $conn->query($sql);
 
 if ($result && $result->num_rows > 0) {
@@ -68,5 +69,4 @@ if (isset($_GET['st'])) {
 }
 
 $conn->close();
-
 ?>
