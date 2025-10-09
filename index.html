@@ -8,11 +8,13 @@
 </head>
 <body>
     <h1 class="head">Student information search web</h1>
-    <div class="welcome"></div>
+    <div class="welcome">
+    </div>
     <form method="get" action="search.php" class="input">
-        <label for="st"><br></label>
-        <input type="number" st="st" name="st" placeholder="st(กรอกรหัสนักเรียน)" class="text_label" required><br>
-        <button type="submit" name="search" class = "submit_button">search </button>
+        <label for="st" class="input">
+            <input type="number" st="st" name="st" placeholder="st(ใส่แต่เลข)" class="input_box" required>
+            <button type="submit" name="search" class="search_button">search</button>
+        </label>
     </form>
 </body>
 </html>

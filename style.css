@@ -5,8 +5,7 @@
 }
 
 body {
-   background-image: url('https://www.roong-aroon.ac.th/wp-content/uploads/2022/11/menu1-school.jpg');
-   background-size: cover;
+   background-color: rgb(255, 255, 255);
 }
 
 .welcome {
@@ -18,43 +17,53 @@ body {
    margin: 0 auto;
    padding: 100px;
    border: 10px rgb(0, 0, 0);
-   background-color: yellow;
+   background-color: rgb(255, 255, 255);
    border-radius: 100%;
-   box-shadow: 0 0 50px rgba(0, 0, 0, 0.5);
+   box-shadow: 20px 20px 50px rgba(0, 0, 0, 0.5);
+   margin-top: 50px;
 }
 .head {
-   background-color: rgb(255, 245, 170);
+   background-color: rgb(166, 165, 165);
    color: rgb(0, 0, 0);
-   border-radius: 50px;
+   border-radius: 15px;
    padding: 10px;
    font-size: 120%;
    text-align: center;
    width: 50%;
    margin: 0 auto;
-   border: 5px solid rgb(251, 255, 0);
+   margin-top: 5%;
+   border: 5px outset rgb(200, 200, 200);
+   box-shadow: 20px 20px 50px rgba(0, 0, 0, 0.5);
 }
 
 
-.text_label {
+.input_box {
    
-   background-color: rgb(223, 154, 98);
+   background-color: rgb(166, 165, 165);
    color: rgb(255, 255, 255);
    border-radius: 15px;
-   padding: 20px;
+   padding: 5px;
    font-size: 80%;
-  
-   width: 20%;
-   margin: 0 auto;
-   border: 5px solid rgb(169, 93, 45);
+   width: 45%;
+   margin-left: 115px;
+   margin-top: 45px;
+   border: 5px outset rgb(200, 200, 200);
    text-align: center;
+   box-shadow: 20px 20px 50px rgba(0, 0, 0, 0.5);
+   color: black;
+}
+
+.input_box::placeholder {
+  color: rgb(0, 0, 0);
+  font-weight: size 15px  ;
 }
   
-.submit_button {
-   padding:10px;
-   margin: 20px;
-   border-radius: 20px;
+.search_button {
+   padding:11px;
+   border-radius: 10%;
    width : 6%;
-   background-color: rgb(196, 111, 51);
-   color: white;
-   font-size: 20px;
+   background-color: rgb(166, 165, 165);
+   font-size: 15px;
+   border: 5px outset rgb(200, 200, 200);
+   box-shadow: 20px 20px 50px rgba(0, 0, 0, 0.5);    
 }
