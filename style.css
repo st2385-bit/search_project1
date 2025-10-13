@@ -9,6 +9,7 @@ body {
 }
 
 .welcome {
+
    background-image: url('https://www.starfishlabz.com/media/thumb/1728/15/1437824904.png');
    background-position: center;
    background-repeat: no-repeat;
@@ -34,6 +35,7 @@ body {
    margin-top: 5%;
    border: 5px outset rgb(200, 200, 200);
    box-shadow: 20px 20px 50px rgba(0, 0, 0, 0.5);
+   animation:backwards 2s infinite alternate;
 }
 
 
