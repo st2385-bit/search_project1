@@ -23,7 +23,7 @@ body {
    margin-top: 50px;
 }
 .head {
-   font-style: italic;
+   font-style: italic; 
    background-color: rgb(166, 165, 165);
    color: rgb(0, 0, 0);
    border-radius: 15px;
@@ -35,7 +35,6 @@ body {
    margin-top: 5%;
    border: 5px outset rgb(200, 200, 200);
    box-shadow: 20px 20px 50px rgba(0, 0, 0, 0.5);
-   animation:backwards 2s infinite alternate;
 }
 
 
