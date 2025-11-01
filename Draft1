@@ -1,0 +1,124 @@
+<?php
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "search_project";
+$tablename = "students_information";
+
+$conn = new mysqli($servername, $username, $password, $dbname);
+if ($conn->connect_error) die("Connection failed: " . $conn->connect_error);
+
+$student = null;
+$error = "";
+
+// เมื่อมีการส่งข้อมูล ค้นหาหรืออัปเดต
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
+    $student_id = intval($_POST['student_id'] ?? $_POST['st'] ?? 0); // หา id จาก hidden input
+
+    //มีการกรอกค่าใหม่อะป่าว
+    $fields = [
+        'nameupdate' => 'first_name',
+        'lastname'   => 'last_name',
+        'nickname'   => 'nickname',
+        'class'      => 'class',
+        'number'     => 'number'
+    ];
+
+    $updateFields = [];
+    $params = [];
+    $types = "";
+
+    foreach ($fields as $input => $column) { // เชคว่ามีการกรอกมั้ยผ่านloop
+        if (!empty($_POST[$input])) {
+            $updateFields[] = "$column = ?";
+            $params[] = $_POST[$input];
+            $types .= "s";
+        }
+    }
+
+    if ($updateFields) {
+        $sql = "UPDATE $tablename SET " . implode(", ", $updateFields) . " WHERE student_id = ?";
+        $params[] = $student_id;
+        $types .= "i";
+
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param($types, ...$params);
+        $stmt->execute();
+    }
+
+    // ดึงข้อมูลนักเรียนจากฐานข้อมูล
+
+    $stmt = $conn->prepare("SELECT * FROM $tablename WHERE student_id = ?");
+    $stmt->bind_param("i", $student_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $student = $result->num_rows ? $result->fetch_assoc() : null;
+    
+    
+    
+    if (!$student) $error = "ไม่เจอโว้ย: $student_id";
+}
+$nid = $student['student_id'] ?? '';
+$nfirstname = $student['first_name'] ?? ''; 
+$nlastname = $student['last_name'] ?? ''; 
+$nnickname = $student['nickname'] ?? ''; 
+$nclass = $student['class'] ?? ''; 
+$nnumber = $student['number'] ?? '';
+?>
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="design.css">
+    <title>Student information</title>
+</head>
+<body>
+    <?php if ($_SERVER["REQUEST_METHOD"] === "POST" && $student): ?>
+        <div class="result_table">
+
+            <p>
+                <b>รหัสนักเรียน:</b> <?= htmlspecialchars($nid) ?><form method="post" action="search.php" style="display:inline-block; margin-left:20px;">
+                    <input type="number" name="st" placeholder="new search" class="update" required>
+                    <button type="submit" class="submit_button">ค้นหา</button>
+                </form>
+            </p><br>
+
+            <form method="post" action="search.php" class="update_form">
+                <input type="hidden" name="student_id" value="<?= $student['student_id'] ?>"> <!--ขาดไม่ได้เดี๋ยวโปรแกรมเอ๋อ-->
+
+                <label>ชื่อ:</label><label><?= htmlspecialchars($nfirstname) ?></label>
+                <input type="text" name="nameupdate" class="update"><br><br>
+
+                <label>นามสกุล:</label><label><?= htmlspecialchars($nlastname) ?></label>
+                <input type="text" name="lastname" class="update"><br><br>
+
+                <label>ชื่อเล่น:</label><label><?= htmlspecialchars($nnickname) ?></label>
+                <input type="text" name="nickname" class="update"><br><br>
+
+                <label>ชั้น:</label><label><?= htmlspecialchars($nclass) ?></label>
+                <input type="text" name="class" class="update"><br><br>
+
+                <label>เลขที่:</label>
+                <!-- <input type="number" name="number" value="<?= htmlspecialchars($nnumber) ?>" class="update"> -->
+                <br><br>
+                <button type="submit" class="name_button">save your update</button>
+            </form>
+        </div>
+
+    <?php elseif ($_SERVER["REQUEST_METHOD"] === "POST"): ?>
+        <div class="error"><?= $error ?></div>
+    <?php endif; ?>
+
+    
+    <?php if ($_SERVER["REQUEST_METHOD"] !== "POST"): ?>
+        <form method="post" action="search.php" class="new search">
+            <input type="number" name="st" placeholder="กรอกรหัสนักเรียน" class="update" required>
+            <button type="submit" class="submit_button">ค้นหา</button>
+        </form>
+    <?php endif; ?>
+
+    <a href="index.html" class="back-link">กลับหน้าหลัก</a>
+</body>
+</html>
+<?php $conn->close();?>
