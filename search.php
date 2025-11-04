@@ -1,4 +1,4 @@
-<?php include('.php'); ?>
+<?php include('php.php'); ?>
 <!DOCTYPE html>
 <html lang="th">
 <head>
