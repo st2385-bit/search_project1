@@ -1,57 +1,59 @@
-<?php
+<?php include('.php'); ?>
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <link rel="stylesheet" href="design.css"> -->
+    <title>Student information</title>
+</head>
+<body>
+    <?php if ($_SERVER["REQUEST_METHOD"] === "POST" && $student): ?>
+        <div class="result_table">
 
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "search_project"; // your database name
-$tablename = "students_information";
+            <p>
+                <b>ID:</b> <?= htmlspecialchars($nid) ?><form method="post" action="search.php" style="display:inline-block; margin-left:20px;">
+                    <input type="number" name="st" placeholder="new search" class="update" required>
+                    <button type="submit" class="submit_button">ค้นหา</button>
+                </form>
+            </p><br>
 
-$conn = new mysqli($servername, $username, $password, $dbname); // Connect to database
+            <form method="post" action="search.php" class="update_form">
+                <input type="hidden" name="student_id" value="<?= $student['student_id'] ?>"> <!--ขาดไม่ได้เดี๋ยวโปรแกรมเอ๋อ-->
 
+                <label>ชื่อ:</label><label><?= htmlspecialchars($nfirstname) ?></label>
+                <input type="text" name="nameupdate" class="update"><br><br>
 
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error); // if cant connect to database
-}
+                <label>นามสกุล:</label><label><?= htmlspecialchars($nlastname) ?></label>
+                <input type="text" name="lastname" class="update"><br><br>
 
+                <label>ชื่อเล่น:</label><label><?= htmlspecialchars($nnickname) ?></label>
+                <input type="text" name="nickname" class="update"><br><br>
 
-$student_id = isset($_GET['st']) ? intval($_GET['st']) : 0; // read student_id from URL 
+                <label>ชั้น:</label><label><?= htmlspecialchars($nclass) ?></label>
+                <input type="text" name="class" class="update"><br><br>
 
+                <label>เลขที่:</label>
+                <label><?= htmlspecialchars($nnumber) ?></label>
+                <!-- <input type="number" name="number" value="<?= htmlspecialchars($nnumber) ?>" class="update"> -->
+                <br><br>
+                <button type="submit" class="name_button">save your update</button>
+            </form>
+        </div>
 
-$sql = "SELECT * FROM $tablename ORDER BY student_id ASC"; // import all data from database to read
-$result = $conn->query($sql);
+    <?php elseif ($_SERVER["REQUEST_METHOD"] === "POST"): ?>
+        <div class="error"><?= $error ?></div>
+    <?php endif; ?>
 
-// form
+    
+    <?php if ($_SERVER["REQUEST_METHOD"] !== "POST"): ?>
+        <form method="post" action="search.php" class="new search">
+            <input type="number" name="st" placeholder="กรอกรหัสนักเรียน" class="update" required>
+            <button type="submit" class="submit_button">ค้นหา</button>
+        </form>
+    <?php endif; ?>
 
-if (isset($_GET['st'])) {
-
-    $student_id = intval($_GET['st']);
-
-    $sql = "SELECT * FROM $tablename WHERE student_id = $student_id ORDER BY student_id ASC";
-    $result = $conn->query($sql);
-    $row = $result->fetch_assoc();
-
-    if (!$result) {
-        die("❌ Query error: " . $conn->error . "<br>SQL: " . $sql);
-    }
-
-    echo "<h2>ผลการค้นหา</h2>";
-
-    if ($result->num_rows > 0) {
-        echo "student ID : $student_id<br>
-            First Name : " . $row["first_name"] . "<br>
-            Last Name : " . $row["last_name"] . "<br>
-            Nickname : " . $row["nickname"] . "<br>
-            Class : " . $row["class"] . "<br>
-            Number : " . $row["number"] . "<br>
-        ";
-        echo '<br><a href="index.html">🔙 กลับหน้าแรก</a>';
-    } else {
-        echo "⚠️ ไม่พบข้อมูลนักเรียนที่มี Student ID = $student_id";
-        echo '<br><a href="index.html">🔙 กลับหน้าแรก</a>';
-    }
-} else {
-    echo "⚠️ กรุณากรอกค่า Student ID ในฟอร์มก่อน";
-    echo '<br><a href="index.html">🔙 กลับหน้าแรก</a>';
-}
-
-$conn->close();
+    <a href="index.html" class="back-link">กลับหน้าหลัก</a>
+</body>
+</html>
+<?php $conn->close();?>
