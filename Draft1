@@ -13,7 +13,7 @@ $error = "";
 
 // เมื่อมีการส่งข้อมูล ค้นหาหรืออัปเดต
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    $student_id = intval($_POST['student_id'] ?? $_POST['st'] ?? 0); // หา id จาก hidden input
+    $student_id = intval($_POST['student_id'] ?? $_POST['st'] ?? 0); // หา id จาก hidden input ด้วยถ้าแล้ว('??')
 
     //มีการกรอกค่าใหม่อะป่าว
     $fields = [
@@ -39,10 +39,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     if ($updateFields) {
         $sql = "UPDATE $tablename SET " . implode(", ", $updateFields) . " WHERE student_id = ?";
         $params[] = $student_id;
-        $types .= "i";
+        $types .= "i";// เพื่อความปลอดถัย เดี๋ยวมีไอคนมาใส่ '; DROP TABLE students_information;--' อะไรแบบนี้
 
         $stmt = $conn->prepare($sql);
-        $stmt->bind_param($types, ...$params);
+        $stmt->bind_param($types, ...$params);// load ข้อมูลใหม่ 
         $stmt->execute();
     }
 
@@ -70,7 +70,7 @@ $nnumber = $student['number'] ?? '';
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="design.css">
+    <!-- <link rel="stylesheet" href="design.css"> -->
     <title>Student information</title>
 </head>
 <body>
@@ -78,7 +78,7 @@ $nnumber = $student['number'] ?? '';
         <div class="result_table">
 
             <p>
-                <b>รหัสนักเรียน:</b> <?= htmlspecialchars($nid) ?><form method="post" action="search.php" style="display:inline-block; margin-left:20px;">
+                <b>ID:</b> <?= htmlspecialchars($nid) ?><form method="post" action="search.php" style="display:inline-block; margin-left:20px;">
                     <input type="number" name="st" placeholder="new search" class="update" required>
                     <button type="submit" class="submit_button">ค้นหา</button>
                 </form>
@@ -100,6 +100,7 @@ $nnumber = $student['number'] ?? '';
                 <input type="text" name="class" class="update"><br><br>
 
                 <label>เลขที่:</label>
+                <label><?= htmlspecialchars($nnumber) ?></label>
                 <!-- <input type="number" name="number" value="<?= htmlspecialchars($nnumber) ?>" class="update"> -->
                 <br><br>
                 <button type="submit" class="name_button">save your update</button>
