@@ -4,20 +4,31 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>M.4 project web</title>
-    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="design.css">
 </head>
 <body>
-    <h1 class="head"><span class="Roong">R</span>oong<span class="Aroon">A</span>roon</h1>
-    <h1 class="head1">Student <span class="id">id</span>web</h1>
-    <h2 class="head2">search for <span class="name">[name]</span><span class="class">[class]</span><span class="number">[number]</span></h2>
-    <div class="welcome">
-    </div>
-    <form method="post" action="search.php" class="input">
-        <label for="st" class="input">
-            <input type="number" id="st" name="st" placeholder="st(enter only numbers)" class="input_box" required>
-            <button type="submit" name="search" class="search_button">search</button>
-            <button type="submit" name="register" class="register_button">register</button>
-        </label>
-    </form>
+    <header>
+        <h1 class="head"><span class="Roong">R</span>oong<span class="Aroon">A</span>roon</h1>
+        <h2 class="head1">Student <span class="id">id</span> web</h2>
+        <h3 class="head2">search for <span class="name">[name]</span> <span class="class">[class]</span> <span class="number">[number]</span></h3>
+    </header>
+
+    <main>
+        <div class="welcome"></div>
+
+        <!-- Search form -->
+        <form method="post" action="search.php" class="input">
+            <label for="st" class="visually-hidden">Student ID</label>
+            <input type="number" id="st" name="st" placeholder="st (enter only numbers)" class="input_box" required>
+            <button type="submit" name="search" class="search_button">Search</button>
+        </form>
+
+        <!-- Register form (separate, not nested) -->
+        <form action="add.php" method="post" class="register-form">
+            <button type="submit" name="register" class="register_button">Register</button>
+        </form>
+    </main>
 </body>
+</html>
 </html>
