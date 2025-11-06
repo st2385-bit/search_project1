@@ -1,57 +1,68 @@
 <?php
-
+include('php.php');
 $servername = "localhost";
 $username = "root";
 $password = "";
-$dbname = "search_project"; // your database name
+$dbname = "search_project";
 $tablename = "students_information";
 
-$conn = new mysqli($servername, $username, $password, $dbname); // Connect to database
+$conn = new mysqli($servername, $username, $password, $dbname);
+if ($conn->connect_error) die("Connection failed: " . $conn->connect_error);
 
+$student = null;
+$error = "";
 
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error); // if cant connect to database
-}
+// เมื่อมีการส่งข้อมูล ค้นหาหรืออัปเดต
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
+    $student_id = intval($_POST['student_id'] ?? $_POST['st'] ?? 0); // หา id จาก hidden input ด้วยถ้าแล้ว('??')
 
+    //มีการกรอกค่าใหม่อะป่าว
+    $fields = [
+        'nameupdate' => 'first_name',
+        'lastname'   => 'last_name',
+        'nickname'   => 'nickname',
+        'class'      => 'class',
+        'number'     => 'number'
+    ];
 
-$student_id = isset($_GET['st']) ? intval($_GET['st']) : 0; // read student_id from URL 
+    $updateFields = [];
+    $params = [];
+    $types = "";
 
-
-$sql = "SELECT * FROM $tablename ORDER BY student_id ASC"; // import all data from database to read
-$result = $conn->query($sql);
-
-// form
-
-if (isset($_GET['st'])) {
-
-    $student_id = intval($_GET['st']);
-
-    $sql = "SELECT * FROM $tablename WHERE student_id = $student_id ORDER BY student_id ASC";
-    $result = $conn->query($sql);
-    $row = $result->fetch_assoc();
-
-    if (!$result) {
-        die("❌ Query error: " . $conn->error . "<br>SQL: " . $sql);
+    foreach ($fields as $input => $column) { // เชคว่ามีการกรอกมั้ยผ่านloop
+        if (!empty($_POST[$input])) {
+            $updateFields[] = "$column = ?";
+            $params[] = $_POST[$input];
+            $types .= "s";
+        }
     }
 
-    echo "<h2>ผลการค้นหา</h2>";
+    if ($updateFields) {
+        $sql = "UPDATE $tablename SET " . implode(", ", $updateFields) . " WHERE student_id = ?";
+        $params[] = $student_id;
+        $types .= "i";// เพื่อความปลอดถัย เดี๋ยวมีไอคนมาใส่ '; DROP TABLE students_information;--' อะไรแบบนี้
 
-    if ($result->num_rows > 0) {
-        echo "student ID : $student_id<br>
-            First Name : " . $row["first_name"] . "<br>
-            Last Name : " . $row["last_name"] . "<br>
-            Nickname : " . $row["nickname"] . "<br>
-            Class : " . $row["class"] . "<br>
-            Number : " . $row["number"] . "<br>
-        ";
-        echo '<br><a href="index.html">🔙 กลับหน้าแรก</a>';
-    } else {
-        echo "⚠️ ไม่พบข้อมูลนักเรียนที่มี Student ID = $student_id";
-        echo '<br><a href="index.html">🔙 กลับหน้าแรก</a>';
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param($types, ...$params);// load ข้อมูลใหม่ 
+        $stmt->execute();
     }
-} else {
-    echo "⚠️ กรุณากรอกค่า Student ID ในฟอร์มก่อน";
-    echo '<br><a href="index.html">🔙 กลับหน้าแรก</a>';
-}
 
-$conn->close();
+    // ดึงข้อมูลนักเรียนจากฐานข้อมูล
+
+    $stmt = $conn->prepare("SELECT * FROM $tablename WHERE student_id = ?");
+    $stmt->bind_param("i", $student_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $student = $result->num_rows ? $result->fetch_assoc() : null;
+    
+    
+    
+    if (!$student) $error = "ไม่เจอโว้ย: $student_id";
+}
+$nid = $student['student_id'] ?? '';
+$nfirstname = $student['first_name'] ?? ''; 
+$nlastname = $student['last_name'] ?? ''; 
+$nnickname = $student['nickname'] ?? ''; 
+$nclass = $student['class'] ?? ''; 
+$nnumber = $student['number'] ?? '';
+?>
