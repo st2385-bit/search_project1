@@ -2,11 +2,11 @@
 $servername = "localhost";
 $username = "root";
 $password = "";
-$dbname = "search_project";
-$tablename = "students_information";
+$dbname = "search_project";// ชื่อฐานข้อมูล
+$tablename = "students_information";// ชื่อตาราง
 
-$conn = new mysqli($servername, $username, $password, $dbname);
-if ($conn->connect_error) die("Connection failed: " . $conn->connect_error);
+$conn = new mysqli($servername,$username,$password,$dbname);
+if ($conn->connect_error) die("Connection failed :" . $conn->connect_error);
 
 $student = null;
 $error = "";
@@ -56,9 +56,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     
     
     
-    if (!$student) $error = "ไม่เจอโว้ย: $student_id";
+    if (!$student) $error = "ไม่พบ: $student_id โว้ย";
 }
-$nid = $student['student_id'] ?? '';
+$nid = $student['student_id'] ?? ''; 
 $nfirstname = $student['first_name'] ?? ''; 
 $nlastname = $student['last_name'] ?? ''; 
 $nnickname = $student['nickname'] ?? ''; 
