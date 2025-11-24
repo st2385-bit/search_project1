@@ -4,26 +4,33 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>M.4 project web</title>
-    <!-- <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;600&display=swap" rel="stylesheet"> -->
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <header>
-        <h1 class="head"><span class="Roong">R</span>oong <span class="Aroon">A</span>roon</h1>
-        <h1 class="head">Student <span class="id">id</span> web</h1>
-        <h2 class="head_2">search for <span class="name">[name]</span><span class="class">[class]</span><span class="number">[number]</span></h2>
+    <header class="site-header">
+        <h1 class="logo"><span class="Roong">R</span>oong <span class="Aroon">A</span>roon</h1>
+        <p class="subtitle">Student <span class="id">id</span> web</p>
+        
     </header>
-    <main>
-        <div class="welcome">
-        </div>
-        <!-- <form  method="post" action="register.php" class="register">
-            <button type="submit" name="register" class="register_button">register</button>
-        </form> -->
-        <form method="post" action="search.php" class="input">
-            <label for="st" class="input"></label>
-            <input type="number" id="st" name="st" placeholder="st(enter only numbers)" class="input_box" required>
-            <button type="submit" name="search" class="search_button">search</button>
+
+    <main class="page">
+      <div class="search-area">
+        <!-- search form: input only (id used so external button can submit it) -->
+        <form id="searchForm" method="post" action="search.php" class="search-form" role="search">
+          <input type="number" id="st" name="st" placeholder="st (enter only numbers)" class="search-input" required>
         </form>
+        <p class="subtitle">search for <span class="name">[name]</span> <span class="class">[class]</span> <span class="number">[number]</span></p>
+        <!-- controls row: buttons centered under the input (search button uses form="searchForm") -->
+        <div class="controls">
+          <form class="inline-form" method="post" action="register.php">
+            <button type="submit" name="register" class="btn register-button">Register</button>
+          </form>
+
+          <button type="submit" form="searchForm" name="search" class="btn search-button">Search</button>
+        </div>
+
+        
+      </div>
     </main>
 </body>
 </html>

@@ -1,73 +1,140 @@
-* {
-   text-align: center; /*จัดกึ่งtext ให้อยู่ตรงกลาง โดยใช้ align แปลว่าจัดตำแหน่ง*/
-   font-family:'Courier New', Courier, monospace; /*กำหนดรูปแบบตัวอักษรให้เป็น serif   family = ประกูลของfont*/
-   font-style: italic;/*ทำให้ font เป็นตัวเอียง*/
+/* Reset / layout */
+:root{
+  --bg: #f6f7fb;
+  --card: #fff;
+  --muted:#9aa0a6;
+  --text:#202124;
+  --accent-shadow: rgba(32,33,36,0.12);
+  --accent-blue: #1a73e8;
 }
 
+*{box-sizing:border-box}
+html,body{height:100%}
 
-
-
-h1, h2 {
-    text-align: center;
-    color: #414141;
+/* center the whole page like Google */
+body{
+  margin:0;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  background:var(--bg);
+  color:var(--text);
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex-direction:column;
+  min-height:100vh;
+  padding:24px 16px;
 }
 
-
-.head {
-   margin-top: center;/*จัดข้อความให้อยู่ตรงกลาง*/
-   font-style: italic; /*ทำให้ font เป็นตัวเอียง ตามfont*/
-   font-size: 400%;/*ขนาดตัวอักษรใหญ่ขึ้น 20%*/
-   text-align: center;/*จัดข้อความให้อยู่ตรงกลางในกรอบ*/ 
-   margin: 0 auto;/*จัดกรอบให้อยู่ตรงกลาง ใช้  x-y=0 autoปรับให้อยู่ตรงกลางอัตโนมัติ*/
-   margin-top: 5%;/*เว้นระยะห่างจากด้านบน 5%*/
-   text-shadow: 20px 20px 50px rgba(0, 0, 0, 0.5);/*เพิ่มเงาให้กรอบ ปรับความเข้มเป็น20pxแนวนอน ปรับความเข้มเป็น20pxแนวตั้ง 50pxค่าความฟุ้งหรือการกระจายของเงา */
+/* Page container centered vertically */
+.page{
+  width:100%;
+  max-width:680px;
+  text-align:center;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:18px;
+  margin-top:8px;
 }
 
-
-
-.head_2{
-   margin-top: center;/*จัดข้อความให้อยู่ตรงกลาง*/
-   font-style: italic; /*ทำให้ font เป็นตัวเอียง ตามfont*/
-   font-size: 350%;/*ขนาดตัวอักษรใหญ่ขึ้น 500%*/
-   text-align: center;/*จัดข้อความให้อยู่ตรงกลางในกรอบ*/ 
-   margin: 0 auto;/*จัดกรอบให้อยู่ตรงกลาง ใช้  x-y=0 autoปรับให้อยู่ตรงกลางอัตโนมัติ*/
-   margin-top: 2%;/*เว้นระยะห่างจากด้านบน 2%*/
-   text-shadow: 20px 20px 50px rgba(0, 0, 0, 0.5);/*เพิ่มเงาให้กรอบ ปรับความเข้มเป็น20pxแนวนอน ปรับความเข้มเป็น20pxแนวตั้ง 50pxค่าความฟุ้งหรือการกระจายของเงา */
+/* Header / branding (kept compact) */
+.site-header{
+  text-align:center;
+  margin:0 0 18px 0;
+}
+.logo{
+  margin:0;
+  font-weight:600;
+  letter-spacing:0.5px;
+  font-size:48px;
+}
+.subtitle{
+  margin:6px 0 0;
+  color:var(--muted);
+  font-size:14px;
 }
 
-
-.input_box {
-   background-color: rgb(215, 214, 214);   /* พื้นหลังเทา */             
-   border-radius: 50px;                    /* มุมโค้งมน */
-   padding: 14px;                           /* เพิ่มช่องว่างในกล่อง 5px */
-   font-size: 120%;                         /* ตัวอักษรเล็กลง 100% */
-   width: 50%;                            /* กว้าง 50% ของหน้าจอ */
-   margin-top: 0 auto;                    /* จัดกล่องให้อยู่กึ่งกลาง */
-   margin-top: 2%;            /* เว้นระยะห่างจากด้านบน 2% */
-   text-align: center;                     /* จัดข้อความภายในให้อยู่กลาง */
-   box-shadow: 20px 20px 50px rgba(0, 0, 0, 0.5);  /* เพิ่มเงาให้กล่อง */
-   color: black;  
-   border: none; /* ลบเส้นขอบ */
-   
+/* Search area: input on top, buttons below */
+.search-area{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  width:100%;
+  gap:12px;
 }
 
-
-.input_box::placeholder {
-  color: rgb(87, 87, 87);/*เปลี่ยนสีตัวอักษรในกล่องเป็นสีดำ*/
-  font-weight:  15%;/*ปรับความหนาของตัวอักษรในกล่องเป็น15%*/
-  font-family: serif;/*กำหนดรูปแบบตัวอักษรในกล่องให้เป็น serif*/
+/* search form styled as a centered card with vertical layout */
+.search-form{
+  width:100%;
+  max-width:640px;
+  background:var(--card);
+  border-radius:24px;
+  padding:18px 20px;
+  border:1px solid #e8e8e8;
+  box-shadow:0 6px 18px rgba(32,33,36,0.06);
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:12px;
 }
 
-.Roong{
-   color: orange;}/*กำหนดสีตัวอักษรเป็นสีส้ม*/
-.Aroon{
-   color: orange;}/*กำหนดสีตัวอักษรเป็นสีส้ม*/
-  
-.id{
-color: rgb(255, 0, 0);}/*กำหนดสีตัวอักษรเป็นสีน้ำเงินเข้ม*/
-.name{
-   color:  #ff9100;}/*กำหนดสีตัวอักษรเป็นสีแดง*/
-   .class{
-   color: #ff9100;}/*กำหนดสีตัวอักษรเป็นสีน้ำเงิน*/
-   .number{
-      color:#ff9100;}/*กำหนดสีตัวอักษรเป็นสีเขียว*/
+/* input stretches full width inside the card */
+.search-input{
+  width:100%;
+  height:20px;
+  border:0;
+  outline:0;
+  font-size:16px;
+  padding:0 14px;
+  background:transparent;
+  color:var(--text);
+  border-radius:12px;
+  /* box-shadow: inset 0 1px 0 rgba(0,0,0,0.03); */
+}
+
+/* controls row: buttons centered under the input */
+.controls{
+  display:flex;
+  gap:12px;
+  justify-content:center;
+  width:100%;
+}
+
+/* generic button */
+.btn{
+  cursor:pointer;
+  font-weight:600;
+  border-radius:20px;
+  padding:10px 18px;
+  border:none;
+  min-width:110px;
+  transition:transform .06s ease, box-shadow .06s;
+}
+
+/* Search button styling (prominent) */
+.search-button{
+  background:var(--accent-blue);
+  color:#fff;
+  box-shadow: 0 2px 6px rgba(26,115,232,0.18);
+}
+.search-button:active{ transform:translateY(1px); }
+
+/* Register button (subtle) */
+.register-button{
+  background:transparent;
+  color:var(--text);
+  border:2px solid #e8e8e8;
+}
+
+/* small hint and footer */
+.hint{color:var(--muted);font-size:13px;margin:6px 0 0}
+
+/* Responsive */
+@media (max-width:520px){
+  .logo{font-size:36px}
+  .search-input{font-size:15px;height:44px}
+  .search-form{padding:12px}
+  .btn{min-width:90px;padding:9px 14px}
+}
