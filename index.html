@@ -1,22 +1,67 @@
+<?php 
+include 'server.php' ?>
 <!DOCTYPE html>
 <html lang="th">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>M.4 project web</title>
-    <link rel="stylesheet" href="style.css">
+     <link rel="stylesheet" href="design.css"> 
+    <title>Student information</title>
 </head>
 <body>
-    <h1 class="head"> <span class="R" >R</span>oong <span class="A ">A</span>roon </h1> <!-- เปลี่ยนสีตัวอักษร R and A เป็นสีส้ม ด้วย span เพราะทำให้เปลี่ยนสีเฉพาะที่ต้องการตัวอักษรได้-->
-    <h1 class="head_2">Student <span class="ID">ID</span> web</h1>
-    <h2>search for <span class="NAME">[name]</span><span class="CLASS">[class]</span><span class="NUMBER">[number]</span></h2>
-    <div class="welcome">
-    </div>
-    <form method="get" action="search.php" class="input">
-        <label for="st" class="input">
-            <input type="number" st="st" name="st" placeholder="st(enter only numbers)" class="input_box" required>
-           <!-- <button type="submit" name="search" class="search_button">search</button>-->
-            <!--<button type="submit" name="register" class="register_button">register</button>-->
+    <?php if ($_SERVER["REQUEST_METHOD"] === "POST" && $student): ?>
+        <div class="result_table">
+
+            <p>
+                <form method="post" action="delete.php" class="delete">
+                    <input type="hidden" name="student_id" value="<?= $student['student_id'] ?>">
+                    <b>ID : </b> <?= htmlspecialchars($nid) ?>
+                    <button type="submit" class="delete">delete</button>
+                </form>
+                <form method="post" action="search.php" style="display:inline-block; margin-left:20px;">
+                    <input type="number" name="st" placeholder="new search" class="update" required>
+                    <button type="submit" class="submit_button"></button>
+                </form>
+            </p><br>
+
+            <form method="post" action="search.php" class="update_form">
+                <input type="hidden" name="student_id" value="<?= $student['student_id'] ?>"> <!--ขาดไม่ได้เดี๋ยวโปรแกรมเอ๋อ-->
+
+                <label>ชื่อจริง : </label><input type="text" id="first_name" name="first_name" value="<?= htmlspecialchars($nfirstname) ?>">
+                <button type="submit" name="edit"value="first_name" class="update"></button>
+                <button type="submit" name="undo_firstname" class="undo"></button><br><br>
+
+                <label>นามสกุล : </label><input type="text" id="last_name" name="last_name" value="<?= htmlspecialchars($nlastname) ?>">
+                <button type="submit" name="edit"value="last_name" class="update"></button>
+                <button type="submit" name="undo_lastname" class="undo"></button><br><br>
+
+                <label>ชื่อเล่น : </label><input type="text" id="nickname" name="nickname" value="<?= htmlspecialchars($nnickname) ?>">
+                <button type="submit" name="edit"value="nickname" class="update"></button>
+                <button type="submit" name="undo_nickname" class="undo"></button><br><br>
+
+                <label>ชั้น : </label><input type="text" id="class" name="class" value="<?= htmlspecialchars($nclass) ?>">
+                <button type="submit" name="edit"value="class" class="update"></button>
+                <button type="submit" name="undo_class" class="undo"></button><br><br>
+
+                <label>เลขที่ : </label><label><?= htmlspecialchars($nnumber) ?></label><br><br>
+            </form>
+        </div>
+
+    <?php elseif ($_SERVER["REQUEST_METHOD"] === "POST"): ?>
+        <div class="error"><?= $error ?></div>
+    <?php endif; ?>
+
+    
+    <?php if ($_SERVER["REQUEST_METHOD"] !== "POST"): ?>
+        <form method="post" action="search.php" class="new search">
+            <input type="number" name="st" placeholder="กรอกรหัสนักเรียน" class="update" required>
+            <button type="submit" class="submit_button"></button>
+        </form>
+    <?php endif; ?>
+
+    <form action="index.html" method="post">
+        <button type="submit">Back to Home</button>
     </form>
 </body>
 </html>
+<?php $conn->close();?>
