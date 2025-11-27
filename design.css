@@ -180,8 +180,9 @@ input.update{
 .delete{
   padding:9px 12px;
   border-radius:6px;
+  width:fit-content;
   background:transparent;
-  color:var(--danger);
+  background-color: red;
   border:1px solid transparent;
   font-weight:600;
 }
@@ -210,21 +211,7 @@ input.update{
   .update_form input[type="text"], .update_form input[type="number"]{ padding:12px 14px; }
 }
 
-/* mobile: ย่อไปเป็นบล็อกเดียวสำหรับหน้าจอเล็ก */
-@media (max-width:760px){
-  body{ font-size:14px; } /* เล็กลงบนมือถือ */
-  .result_table{ padding:6px; }
-  .result_table > .inner{ padding:12px; }
-  .update_form{ grid-template-columns: 1fr; }
-  .update_form > *{ border-right:0; border-bottom:1px solid var(--border); padding:12px; }
-  .update_form label{ text-align:left; padding-left:6px; }
-  .update_form input[type="text"], .update_form input[type="number"]{ width:100%; }
-  .update_form button.update, .update_form button.undo, .update_form button.delete{
-    width:100%;
-    justify-self:stretch;
-    padding:10px;
-    margin-top:8px;
-  }
-}
+
+
 
 /* จบไฟล์ - Desktop-first, สะอาด อ่านง่าย */
