@@ -1,3 +1,10 @@
+<!DOCTYPE html>
+<html lang="th">
+<meta charset="utf-8">
+<title>Register Student</title>
+<link rel="stylesheet" href="register.css">
+<script src="show.js"></script>
+
 <?php
 
 include 'server.php';
@@ -38,10 +45,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             ");
 
             // กลับไปหน้า index.html ทันที
-            header("Location: index.html");
-            exit();
+                // redirect ไปที่หน้า index พร้อมพารามิเตอร์ added=1
+                // หน้า index จะตรวจสอบพารามิเตอร์นี้แล้วเรียก showAlert()
+                echo "<script>window.location.href='index.html?added=1';</script>";
+                exit();
         } else {
-            $error = "เกิดข้อผิดพลาด: " . $stmt->error;
+            $error = "เกิดข้อผิดพลาด : " . $stmt->error;
         }
 
         $stmt->close();
@@ -50,30 +59,39 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $conn->close();
 }
 ?>
-<!DOCTYPE html>
-<html lang="th">
 
-<head>
-    <meta charset="utf-8">
-    <title>Register Student</title>
-</head>
 
 <body>
-    <h1>Register Menu</h1>
-
-    <?php if ($error !== ""): ?>
+    <div class="auth-page">
+        <div class="card">
+            <h1 class="title">Resgister</h1>
+                <?php if ($error !== ""): ?>
         <p style="color: red;"><?= htmlspecialchars($error) ?></p>
     <?php endif; ?>
+            
 
-    <form method="post" action="register.php">
-        <input type="number" name="st" placeholder="Enter student ID" value="<?= htmlspecialchars($st) ?>" required><br>
-        <input type="text" name="firstname" placeholder="Enter firstname" value="<?= htmlspecialchars($fname) ?>" required><br>
-        <input type="text" name="lastname" placeholder="Enter lastname" value="<?= htmlspecialchars($lname) ?>" required><br>
-        <input type="text" name="nickname" placeholder="Enter nickname" value="<?= htmlspecialchars($nickname) ?>" required><br>
-        <input type="text" name="class" placeholder="Enter class" value="<?= htmlspecialchars($class) ?>" required><br>
-        <button type="submit">Register</button>
-    </form>
-    <form action="index.html" method="get">
+            <form class="main-form" method="post" action="register.php">
+                <input class="text-input" type="number" name="st" placeholder="Student ID" value="<?= htmlspecialchars($st) ?>" required>
+
+                <input class="text-input" type="text" name="firstname" placeholder="Name" value="<?= htmlspecialchars($fname) ?>" required>
+
+                <input class="text-input" type="text" name="lastname" placeholder="Lastname" value="<?= htmlspecialchars($lname) ?>" required>
+
+                <input class="text-input" type="text" name="nickname" placeholder="Nickname" value="<?= htmlspecialchars($nickname) ?>" required>
+
+                <input class="text-input" type="text" name="class" placeholder="Class" value="<?= htmlspecialchars($class) ?>" required>
+
+                <button class="primary-btn" type="submit">Register</button>
+
+            </form>
+
+            <div class="footer-link">
+        <a href="index.html" style="text-decoration: underline;">Back to home</a>
+            </div>
+        </div>
+    </div>
+
+    <form method="get" action="index.html" style="display:none;">
         <button type="submit">Back to Home</button>
     </form>
 </body>
