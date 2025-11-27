@@ -1,0 +1,147 @@
+/* Reset / layout */
+:root{
+  --bg: #f6f7fb;
+  --card: #fff;
+  --muted:#9aa0a6;
+  --text:#202124;
+  --accent-shadow: rgba(32,33,36,0.12);
+  --accent-blue: #1a73e8;
+}
+
+*{box-sizing:border-box}
+html,body{height:100%}
+
+/* center the whole page like Google */
+body{
+  margin:0;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  background:var(--bg);
+  color:var(--text);
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex-direction:column;
+  min-height:100vh;
+  padding:24px 16px;
+}
+
+/* Page container centered vertically */
+.page{
+  width:100%;
+  max-width:680px;
+  text-align:center;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:18px;
+  margin-top:8px;
+}
+
+/* Header / branding (kept compact) */
+.site-header{
+  text-align:center;
+  margin:0 0 18px 0;
+}
+.logo{
+  margin:0;
+  font-weight:600;
+  letter-spacing:0.5px;
+  font-size:48px;
+
+  /* gradient text */
+  background: linear-gradient(90deg, #ff8a00 0%, #e52e71 45%, #1a73e8 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+.subtitle{
+  margin:6px 0 0;
+  color:var(--muted);
+  font-size:14px;
+}
+
+/* Search area: input on top, buttons below */
+.search-area{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  width:100%;
+  gap:12px;
+}
+
+/* search form styled as a centered card with vertical layout */
+.search-form{
+  width:100%;
+  max-width:640px;
+  background:var(--card);
+  border-radius:24px;
+  padding:18px 20px;
+  border:1px solid #e8e8e8;
+  box-shadow:0 6px 18px rgba(32,33,36,0.06);
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:12px;
+}
+
+/* input stretches full width inside the card */
+.search-input{
+  width:100%;
+  height:20px;
+  border:0;
+  outline:0;
+  font-size:16px;
+  padding:0 14px;
+  background:transparent;
+  color:var(--text);
+  border-radius:12px;
+  /* box-shadow: inset 0 1px 0 rgba(0,0,0,0.03); */
+}
+
+/* controls row: buttons centered under the input */
+.controls{
+  display:flex;
+  gap:12px;
+  justify-content:center;
+  width:100%;
+}
+
+/* generic button */
+.btn{
+  cursor:pointer;
+  font-weight:600;
+  border-radius:20px;
+  padding:10px 18px;
+  border:none;
+  min-width:110px;
+  transition:transform .06s ease, box-shadow .06s;
+}
+
+/* Search button styling (prominent) */
+.search-button{
+  background:var(--accent-blue);
+  color:#fff;
+  box-shadow: 0 2px 6px rgba(26,115,232,0.18);
+}
+.search-button:active{ transform:translateY(1px); }
+
+/* Register button (subtle) */
+.register-button{
+  background:transparent;
+  color:var(--text);
+  border:2px solid #e8e8e8;
+}
+
+/* small hint and footer */
+.hint{color:var(--muted);font-size:13px;margin:6px 0 0}
+
+/* Responsive */
+@media (max-width:520px){
+  .logo{font-size:36px}
+  .search-input{font-size:15px;height:44px}
+  .search-form{padding:12px}
+  .btn{min-width:90px;padding:9px 14px}
+}
